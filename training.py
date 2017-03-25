@@ -41,7 +41,7 @@ def createRandomTrainingSets(elements):
         training_sets[image_class] = getRandomTrainingSet(elements[image_class], settings.training_size)
     return training_sets
 
-def trainWatson(api_version, api_key, path, classificator_id):
+def trainWatson(api_version, api_key, path, classificator_name):
     """
     Loads all the .zip files in the path folder and calls the API to train IBM Watson
     with the loaded .zip files
@@ -53,7 +53,7 @@ def trainWatson(api_version, api_key, path, classificator_id):
         files = []
         zipfiles = [f for f in os.listdir(path) if ".zip" in f]
         args = dict()
-        args['name'] = classificator_id
+        args['name'] = classificator_name
         for filename in zipfiles:
             try:
                 files.append(open(path+filename, 'r'))
@@ -63,7 +63,12 @@ def trainWatson(api_version, api_key, path, classificator_id):
                 for f in files:
                     f.close()
                 sys.exit("Something went wrong while loading ZIP file, exiting program")
-        result = visual_recognition.create_classifier(**args)
+        try:
+            result = visual_recognition.create_classifier(**args)
+        except:
+            for f in files:
+                f.close()
+            sys.exit("Something went wrong while creating classifier")
         for f in files:
             f.close()
         return result
@@ -81,7 +86,11 @@ if __name__ == "__main__":
     visual classificator.
     """
     arguments = parseArguments()
-    settings = s.Settings(vars(arguments))
+    try:
+        settings = s.Settings(vars(arguments))
+    except:
+        sys.exit("Something went wrong while loading settings, exiting program")
+    print(settings)
     #elements = u.loadCSV(settings.data_file, settings.all_classes, settings.classes)
     #if elements is None:
     #    sys.exit("Something went wrong while loading CSV file, exiting program")
@@ -89,12 +98,12 @@ if __name__ == "__main__":
     #file_decorator = u.fileTypeDecorator(lambda x : x, settings.image_type)
     #URL_decorator = u.URLDecorator(file_decorator, settings.image_URL)
     #u.createZipCollections(training_sets, "./images/", URL_decorator, file_decorator)
-    #trainWatson(settings.api_version, settings.api_key, "./images/", settings.classificator_id)
-    #print(json.dumps(trainWatson(settings.api_version, settings.api_key, "./images/", settings.classificator_id), indent = 2))
+    #trainWatson(settings.api_version, settings.api_key, "./images/", settings.classificator_name)
+    #print(json.dumps(trainWatson(settings.api_version, settings.api_key, "./images/", settings.classificator_name), indent = 2))
 
 
-    visual_recognition = VisualRecognitionV3(version = settings.api_version, api_key = settings.api_key)
-    print(json.dumps(visual_recognition.get_classifier('ClassificatorV1_592985169'), indent=2))
+    #visual_recognition = VisualRecognitionV3(version = settings.api_version, api_key = settings.api_key)
+    #print(json.dumps(visual_recognition.get_classifier('ClassificatorV1_592985169'), indent=2))
 
-    print(json.dumps(visual_recognition.classify(images_url="http://ypic.yoox.biz/ypic/yoox/-resize/180/f/36923352EL.jpg", threshold=0.1,
-        classifier_ids=['ClassificatorV1_592985169']), indent=2))
+    #print(json.dumps(visual_recognition.classify(images_url="http://ypic.yoox.biz/ypic/yoox/-resize/180/f/36923352EL.jpg", threshold=0.1,
+    #    classifier_ids=['ClassificatorV1_592985169']), indent=2))

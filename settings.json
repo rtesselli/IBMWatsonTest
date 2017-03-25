@@ -1,0 +1,1 @@
+{"classes": [], "image_type": "jpg", "training_size": 200, "image_URL": "<insert image URL prefix>", "data_file": "./training_set.csv", "all_classes": true, "classificator_id": "<insert classificator_id>", "api_key": "<insert api_key>", "api_version": "2016-05-20", "classificator_name": "ClassificatorV1"}
