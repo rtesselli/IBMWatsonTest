@@ -3,4 +3,7 @@ __pycache__
 myvenv
 db.sqlite3
 /static
+/images
 .DS_Store
+pacchetti
+training_set.csv
