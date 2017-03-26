@@ -16,6 +16,10 @@ def parseArguments():
     return arg_parser.parse_args()
 
 def classify(URL_decorator, threshold, classificator_id, image_id):
+    """
+    Classify an image given its id by using a given IBM Watson visual classificator.
+    It returns a string with the classification result
+    """
     try:
         result =visual_recognition.classify(images_url=URL_decorator(image_id), threshold=0.1, classifier_ids=[classificator_id])
     except:
@@ -31,6 +35,10 @@ def classify(URL_decorator, threshold, classificator_id, image_id):
 
 
 if __name__ == "__main__":
+    """
+    This programs checks if the classificator is ready-to-use.
+    If so it proceeds to classify all the images given in input with the settings provided
+    """
     arguments = parseArguments()
     try:
         settings = s.Settings(vars(arguments))
