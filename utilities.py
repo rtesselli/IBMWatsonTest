@@ -49,5 +49,5 @@ def createZipCollections(collections, path, URL_decorator, file_decorator):
                     local_file = urllib.urlretrieve(URL_decorator(element))
                     zip_file.write(local_file[0], file_decorator(element), zipfile.ZIP_DEFLATED)
                 except:
-                    print "Error while downloading " + URL_decorator(element)
+                    print("Error while downloading " + URL_decorator(element))
                 counter += 1

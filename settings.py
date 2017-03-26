@@ -6,7 +6,7 @@ class Settings:
             print("Loading default settings")
             self.api_key = raw_input("Please enter the api-key: ")
             self.api_version = '2016-05-20'
-            self.training_size = 1
+            self.training_size = 200
             self.classes = frozenset()
             self.all_classes = True
             self.classificator_id = None
@@ -14,6 +14,7 @@ class Settings:
             self.image_URL = "http://ypic.yoox.biz/ypic/yoox/-resize/180/f/"
             self.image_type = "jpg"
             self.data_file = "./training_set.csv"
+            self.image_dir = "./images/"
         else:
             try:
                 with open(args['settings'], "r") as f:
@@ -31,6 +32,7 @@ class Settings:
             self.image_URL = parsed_json["image_URL"]
             self.image_type = parsed_json["image_type"]
             self.data_file = parsed_json["data_file"]
+            self.image_dir = parsed_json["image_dir"]
 
     def __repr__(self):
         return "Settings()"
@@ -40,12 +42,13 @@ class Settings:
         "api_key" : self.api_key,
         "api_version" : self.api_version,
         "training_size" : self.training_size,
-        "classes" : self.classes,
+        "classes" : list(self.classes),
         "all_classes" : self.all_classes,
         "classificator_id" : self.classificator_id,
         "classificator_name" : self.classificator_name,
         "image_URL" : self.image_URL,
         "image_type" : self.image_type,
         "data_file" : self.data_file,
+        "image_dir" : self.image_dir
         }
-        return str(d)
+        return json.dumps(d, indent = 2)

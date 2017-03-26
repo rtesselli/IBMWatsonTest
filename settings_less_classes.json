@@ -1,13 +1,16 @@
 {
-  "image_dir": "./images/",
+  "image_dir": "./images_test/",
   "image_URL": "http://ypic.yoox.biz/ypic/yoox/-resize/180/f/",
   "api_key": "<insert api_key>",
   "classificator_id": null,
   "classificator_name": "ClassificatorV1",
-  "all_classes": true,
+  "all_classes": false,
   "data_file": "./training_set.csv",
   "image_type": "jpg",
-  "classes": [],
+  "classes": [
+    "accessories",
+    "pants"
+  ],
   "training_size": 200,
   "api_version": "2016-05-20"
 }
