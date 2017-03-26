@@ -23,7 +23,7 @@ python training.py -s <JSON settings file>
 ```
 
 Before using this command fill the empty entries in the settings file.
-By defining the field `"all_classes"` to  `true` in the settings file, the program will create a classifier with all the classes provided in the training file.
+By defining the field `"all_classes"` to  `true` in the settings file, the program will create a classifier with all the classes provided in the training file (see `settings.json`).
 Otherwise if `"all_classes"` is `false` then only the classes defined in the field  `"classes"` will be considered (see `settings_less_classes.json`).
 
 ## How to classify
