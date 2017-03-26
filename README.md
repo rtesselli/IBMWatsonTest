@@ -31,9 +31,8 @@ To classify a [set of] image use the command
 
 ```
 python classify.py <image_id>
-This will use the default settings
-
 ```
+This will use the default settings
 or
 
 ```
