@@ -15,11 +15,12 @@ def parseArguments():
     arg_parser.add_argument("image_id", help="specify image id or .txt file with multiple ids")
     return arg_parser.parse_args()
 
-def classify(URL_decorator, threshold, classificator_id, image_id):
+def classify(URL_decorator, threshold, classificator_id, image_id, api_key, api_version):
     """
     Classify an image given its id by using a given IBM Watson visual classificator.
     It returns a string with the classification result
     """
+    visual_recognition = VisualRecognitionV3(version = api_version, api_key = api_key)
     try:
         result =visual_recognition.classify(images_url=URL_decorator(image_id), threshold=0.1, classifier_ids=[classificator_id])
     except:
@@ -62,13 +63,13 @@ if __name__ == "__main__":
             except:
                 sys.exit("Something went wrong while loading input file, exiting program")
             for image_id in images_id:
-                result = classify(URL_decorator,0.1,settings.classificator_id, image_id)
+                result = classify(URL_decorator,0.1,settings.classificator_id, image_id, settings.api_key, settings.api_version)
                 if result is None:
                     print("Error while calling the classificator on image "+ image_id)
                 else:
                     print(result)
         else:
-            result = classify(URL_decorator,0.1,settings.classificator_id, image_id)
+            result = classify(URL_decorator,0.1,settings.classificator_id, image_id, settings.api_key, settings.api_version)
             if result is None:
                 print("Error while calling the classificator on image "+ image_id)
             else:
